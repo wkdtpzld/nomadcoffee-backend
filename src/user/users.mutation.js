@@ -1,26 +1,18 @@
-import client from "../client.js";
 import UserService from "./Service/userService";
 
 export default {
     Mutation: {
         createAccount: async (_, {
-            firstName,
-            lastName,
             username,
             email,
+            name,
+            githubUsername,
+            location,
             password
         }) => {
             try {
                 await UserService.isExistUser(username, email);
-                return client.user.create({
-                    data: {
-                        firstName,
-                        lastName,
-                        username,
-                        email,
-                        password,
-                    }
-                });
+                return await UserService.createUser(username, email, password, name, githubUsername, location);
             } catch (e) {
                 console.log(e);
             }
